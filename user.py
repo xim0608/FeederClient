@@ -43,8 +43,18 @@ class User:
             else:
                 Lib.prints("Failed to add")
 
-    def get_waiting(self):
-        pass
+    def check_waiting(self):
+        Lib.prints("Check Server...")
+        self.login()
+        get = self.s.get('http://127.0.0.1:5000/feed/check/')
+        if get.status_code == 302:
+            return True
+        else:
+            return False
+
+
+    def delete_from_waiting(self):
+        Lib.prints("")
 
 
 
