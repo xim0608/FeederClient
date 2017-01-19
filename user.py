@@ -50,11 +50,13 @@ class User:
         if get.status_code == 302:
             return True
         else:
+            time.sleep(1)
             return False
 
 
     def delete_from_waiting(self):
-        Lib.prints("")
+        delete = self.s.delete('http://127.0.0.1:5000/feed/delete/')
+        Lib.prints('deleted from waiting list')
 
 
 

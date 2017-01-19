@@ -51,16 +51,25 @@ class NanoBoardAG:
         self.ser.write((self.motorDirection << 7 | self.motorPower).to_bytes(1, 'big'))
 
 
-# if __name__ == '__main__':
-#     nano = NanoBoardAG()
-#     nano.run()
-#     print(nano.valSound)
-#     time.sleep(2)
-#     nano.reverse_motor_direction()
-#     nano.set_motor_power(50)
-#     nano.is_motor_on = True
-#     # nano.reverse_motor_direction()
-#     nano.run()
-#     time.sleep(3)
-#     nano.is_motor_on = False
-#     nano.run()
+if __name__ == '__main__':
+    micro_com = NanoBoardAG()
+    # motor on
+    micro_com.motorPower=70
+    micro_com.is_motor_on = True
+    micro_com.run()
+    # motoring 0.5
+    time.sleep(0.1)
+    # motor off
+    micro_com.is_motor_on = False
+    micro_com.run()
+    # wait to finish feeding..
+    time.sleep(0.3)
+    # motor reverse
+    micro_com.reverse_motor_direction()
+    # motor on
+    micro_com.is_motor_on = True
+    micro_com.run()
+    time.sleep(0.1)
+    # motor off
+    micro_com.is_motor_on = False
+    micro_com.run()
