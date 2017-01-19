@@ -15,7 +15,7 @@ class User:
 
     def login(self):
         self.s = requests.Session()
-        login = self.s.post('http://127.0.0.1:5000/login', data=self.payload())
+        login = self.s.post('https://mysterious-gorge-38499.herokuapp.com/login', data=self.payload())
         if login.status_code == 200:
             Lib.prints("Login succeeded")
             self.login_time = time.time()
@@ -26,13 +26,13 @@ class User:
 
     def logout(self):
         if time.time() - self.login_time < 300:
-            self.s.get('http://127.0.0.1:5000/logout')
+            self.s.get('https://mysterious-gorge-38499.herokuapp.com/logout')
             # print("Logout Succeeded")
 
     def post_action(self):
         Lib.prints("Action!!")
         self.login()
-        post = self.s.post('http://127.0.0.1:5000/action/add/')
+        post = self.s.post('https://mysterious-gorge-38499.herokuapp.com/action/add/')
         if post.status_code == 200:
             Lib.prints("Added Succeeded")
         else:
@@ -46,7 +46,7 @@ class User:
     def check_waiting(self):
         Lib.prints("Check Server...")
         self.login()
-        get = self.s.get('http://127.0.0.1:5000/feed/check/')
+        get = self.s.get('https://mysterious-gorge-38499.herokuapp.com/feed/check/')
         if get.status_code == 302:
             return True
         else:
@@ -55,7 +55,7 @@ class User:
 
 
     def delete_from_waiting(self):
-        delete = self.s.delete('http://127.0.0.1:5000/feed/delete/')
+        delete = self.s.delete('https://mysterious-gorge-38499.herokuapp.com/feed/delete/')
         Lib.prints('deleted from waiting list')
 
 

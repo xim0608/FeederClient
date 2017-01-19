@@ -54,7 +54,7 @@ class NanoBoardAG:
 if __name__ == '__main__':
     micro_com = NanoBoardAG()
     # motor on
-    micro_com.motorPower=70
+    micro_com.motorPower=80
     micro_com.is_motor_on = True
     micro_com.run()
     # motoring 0.5
@@ -63,7 +63,7 @@ if __name__ == '__main__':
     micro_com.is_motor_on = False
     micro_com.run()
     # wait to finish feeding..
-    time.sleep(0.3)
+    time.sleep(0.2)
     # motor reverse
     micro_com.reverse_motor_direction()
     # motor on
