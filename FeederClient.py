@@ -11,7 +11,7 @@ class Microcom:
         self.micro_com = NanoBoardAG()
         Lib.prints("NanoBoard connected")
         self.volume = volume
-        self.micro_com.motorPower = 70
+        self.micro_com.motorPower = 80
         self.empty_timer = 0
         Lib.prints("Please enter your e-mail and password")
         email = input('E-Mail: ')
@@ -19,13 +19,17 @@ class Microcom:
         self.user = User(email, password)
 
     def monitoring(self):
+        get_sound = True
         self.micro_com.run()
         if int(datetime.utcnow().strftime('%S')) % 20 == 0:
             if self.user.check_waiting():
+                get_sound = False
                 self.feed()
                 self.user.delete_from_waiting()
+                time.sleep(5)
+                get_sound = True
 
-        if self.micro_com.valSound >= 30:
+        if self.micro_com.valSound >= 30 and get_sound:
             self.user.post_action()
             time.sleep(30)
 
@@ -44,7 +48,7 @@ class Microcom:
         self.micro_com.is_motor_on = False
         self.micro_com.run()
         # wait to finish feeding..
-        time.sleep(0.3)
+        time.sleep(0.2)
         # motor reverse
         self.micro_com.reverse_motor_direction()
         # motor on
