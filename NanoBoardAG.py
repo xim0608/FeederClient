@@ -2,6 +2,7 @@ import serial
 import time
 import struct
 
+# if you cannot unpack the bytes data, improve the interval.
 
 class NanoBoardAG:
     def __init__(self):
@@ -17,8 +18,8 @@ class NanoBoardAG:
         self.motorDirection = 0
         self.motorPower = 100
 
-        self.ser = serial.Serial("/dev/cu.usbserial", 38400, timeout=1)  # macOS sierra
-        # self.ser = serial.Serial("/dev/ttyUSB0",38400)  # Linux
+        # self.ser = serial.Serial("/dev/cu.usbserial", 38400, timeout=1)  # macOS sierra
+        self.ser = serial.Serial("/dev/ttyUSB0",38400, timeout=1)  # Linux
         time.sleep(1.8)  # wait fot start...
         self.data = [0]*18
 
@@ -54,7 +55,7 @@ class NanoBoardAG:
 if __name__ == '__main__':
     micro_com = NanoBoardAG()
     # motor on
-    micro_com.motorPower=80
+    micro_com.motorPower=70
     micro_com.is_motor_on = True
     micro_com.run()
     # motoring 0.5

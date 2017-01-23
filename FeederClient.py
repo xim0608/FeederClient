@@ -11,7 +11,7 @@ class Microcom:
         self.micro_com = NanoBoardAG()
         Lib.prints("NanoBoard connected")
         self.volume = volume
-        self.micro_com.motorPower = 80
+        self.micro_com.motorPower = 70
         self.empty_timer = 0
         Lib.prints("Please enter your e-mail and password")
         email = input('E-Mail: ')
@@ -21,14 +21,15 @@ class Microcom:
     def monitoring(self):
         get_sound = True
         self.micro_com.run()
-        if int(datetime.utcnow().strftime('%S')) % 20 == 0:
+        # check waiting table every 10 seconds
+        if int(datetime.utcnow().strftime('%S')) % 10 == 0:
             if self.user.check_waiting():
                 get_sound = False
                 self.feed()
                 self.user.delete_from_waiting()
                 time.sleep(5)
                 get_sound = True
-
+        # if sound sensor post action
         if self.micro_com.valSound >= 30 and get_sound:
             self.user.post_action()
             time.sleep(30)

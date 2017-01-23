@@ -9,13 +9,17 @@ class User:
         self.failed_counter = 0
         self.s = requests.Session()
         self.login_time = float()
+        # define server address
+        self.server_address = 'http://127.0.0.1:5000'
+        # https://mysterious-gorge-38499.herokuapp.com
 
     def payload(self):
         return {'email': self.email, 'password': self.password}
 
     def login(self):
         self.s = requests.Session()
-        login = self.s.post('https://mysterious-gorge-38499.herokuapp.com/login', data=self.payload())
+        login_address = self.server_address + '/login'
+        login = self.s.post(login_address, data=self.payload())
         if login.status_code == 200:
             Lib.prints("Login succeeded")
             self.login_time = time.time()
@@ -26,13 +30,16 @@ class User:
 
     def logout(self):
         if time.time() - self.login_time < 300:
-            self.s.get('https://mysterious-gorge-38499.herokuapp.com/logout')
+            logout_address = self.server_address + '/logout'
+            self.s.get('logout_address')
             # print("Logout Succeeded")
 
+    # if sound sensor
     def post_action(self):
         Lib.prints("Action!!")
         self.login()
-        post = self.s.post('https://mysterious-gorge-38499.herokuapp.com/action/add/')
+        post_action_address = self.server_address + '/action/add'
+        post = self.s.post(post_action_address)
         if post.status_code == 200:
             Lib.prints("Added Succeeded")
         else:
@@ -43,19 +50,22 @@ class User:
             else:
                 Lib.prints("Failed to add")
 
+    # check waiting table on server
     def check_waiting(self):
         Lib.prints("Check Server...")
         self.login()
-        get = self.s.get('https://mysterious-gorge-38499.herokuapp.com/feed/check/')
+        check_waiting_address = self.server_address + '/feed/check/'
+        get = self.s.get(check_waiting_address)
         if get.status_code == 302:
             return True
         else:
             time.sleep(1)
             return False
 
-
+    # delete my user_id from server
     def delete_from_waiting(self):
-        delete = self.s.delete('https://mysterious-gorge-38499.herokuapp.com/feed/delete/')
+        delete_address = self.server_address + '/feed/delete/'
+        delete = self.s.delete(delete_address)
         Lib.prints('deleted from waiting list')
 
 
